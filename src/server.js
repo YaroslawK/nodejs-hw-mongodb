@@ -38,7 +38,16 @@ export const startServer = () => {
   app.get('/contacts', async (req, res, next) => {
     try {
       const contacts = await getAllContacts();
-      res.status(200).json({ data: contacts });
+      res.status(200).json({
+        status: 'success',
+        message: 'Successfully found contacts!',
+        data: contacts,
+      });
+      if (!contacts) {
+        return res
+          .status(404)
+          .json({ status: 'error', message: 'Contacts not found' });
+      }
     } catch (error) {
       next(error);
     }
@@ -50,7 +59,9 @@ export const startServer = () => {
       const contacts = await getContactById(contactsId);
 
       if (!contacts) {
-        return res.status(404).json({ message: 'Contact not found' });
+        return res
+          .status(404)
+          .json({ status: 'error', message: 'Contact not found' });
       }
 
       res.status(200).json({ data: contacts });
@@ -60,11 +71,12 @@ export const startServer = () => {
   });
 
   app.use('*', (req, res) => {
-    res.status(404).json({ message: 'Not found' });
+    res.status(404).json({ status: 'error', message: 'Not found' });
   });
 
   app.use((err, req, res, next) => {
     res.status(500).json({
+      status: 'error',
       message: 'Something went wrong',
       error: err.message,
     });
