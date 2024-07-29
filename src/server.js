@@ -64,7 +64,11 @@ export const startServer = () => {
           .json({ status: 'error', message: 'Contact not found' });
       }
 
-      res.status(200).json({ data: contacts });
+      res.status(200).json({
+        status: 'success',
+        message: 'Successfully found contact!',
+        data: contacts,
+      });
     } catch (error) {
       next(error);
     }
