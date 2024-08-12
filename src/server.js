@@ -7,6 +7,7 @@ import router from './routers/contacts.js';
 import notFoundHandler from './middlewares/notFoundHandler.js';
 import errorHandler from './middlewares/errorHandler.js';
 const app = express();
+app.use(express.json());
 
 const PORT = Number(env('PORT', '3000'));
 
@@ -42,13 +43,6 @@ export const startServer = () => {
     res.status(404).json({ status: 'error', message: 'Not found' });
   });
 
-  app.use((err, req, res, next) => {
-    res.status(500).json({
-      status: 'error',
-      message: 'Something went wrong',
-      error: err.message,
-    });
-  });
   app.use(errorHandler);
   app.use(notFoundHandler);
 
