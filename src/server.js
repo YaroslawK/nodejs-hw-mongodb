@@ -4,12 +4,13 @@ import cors from 'cors';
 import { env } from './utils/env.js';
 import pinoPretty from 'pino-pretty';
 import router from './routers/contacts.js';
+import notFoundHandler from './middlewares/notFoundHandler.js';
+import errorHandler from './middlewares/errorHandler.js';
+const app = express();
 
 const PORT = Number(env('PORT', '3000'));
 
 export const startServer = () => {
-  const app = express();
-
   app.use(express.json());
   app.use(cors());
 
@@ -48,6 +49,8 @@ export const startServer = () => {
       error: err.message,
     });
   });
+  app.use(errorHandler);
+  app.use(notFoundHandler);
 
   return new Promise((resolve, reject) => {
     app.listen(PORT, (err) => {
