@@ -37,7 +37,7 @@ export const startServer = () => {
     });
   });
 
-  app.use(router);
+  app.use('/contacts', router);
 
   app.use('*', (req, res) => {
     res.status(404).json({ status: 'error', message: 'Not found' });

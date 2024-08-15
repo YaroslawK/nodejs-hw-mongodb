@@ -13,6 +13,7 @@ export const getContactById = async (contactId) => {
 
 export const createContact = async (payload) => {
   const contact = await ContactsCollection.create(payload);
+  console.log(contact);
 
   return contact;
 };

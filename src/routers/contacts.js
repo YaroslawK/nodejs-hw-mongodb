@@ -1,4 +1,4 @@
-import { Router } from 'express';
+import { json, Router } from 'express';
 import {
   deleteContactController,
   getContactByIdController,
@@ -9,15 +9,16 @@ import ctrlWrapper from '../utils/ctrlWrapper.js';
 import { createContact } from '../services/contacts.js';
 
 const router = Router();
+const jsonParser = json();
 
-router.get('/contacts', ctrlWrapper(getContactsController));
+router.get('/', ctrlWrapper(getContactsController));
 
-router.get('/contacts/:contactsId', ctrlWrapper(getContactByIdController));
+router.get('/:contactsId', ctrlWrapper(getContactByIdController));
 
-router.post('/contacts', ctrlWrapper(createContact));
+router.post('/', jsonParser, ctrlWrapper(createContact));
 
-router.patch('/contacts/:contactId', ctrlWrapper(updateContactController));
+router.patch('/:contactId', ctrlWrapper(updateContactController));
 
-router.delete('/contacts/:contactId', ctrlWrapper(deleteContactController));
+router.delete('/:contactId', ctrlWrapper(deleteContactController));
 
 export default router;
