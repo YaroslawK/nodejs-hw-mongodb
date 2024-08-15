@@ -7,12 +7,10 @@ import router from './routers/contacts.js';
 import notFoundHandler from './middlewares/notFoundHandler.js';
 import errorHandler from './middlewares/errorHandler.js';
 const app = express();
-app.use(express.json());
 
 const PORT = Number(env('PORT', '3000'));
 
 export const startServer = () => {
-  app.use(express.json());
   app.use(cors());
 
   const prettyStream = pinoPretty({
