@@ -37,12 +37,9 @@ export const startServer = () => {
 
   app.use('/contacts', router);
 
-  app.use('*', (req, res) => {
-    res.status(404).json({ status: 'error', message: 'Not found' });
-  });
+  app.use(notFoundHandler);
 
   app.use(errorHandler);
-  app.use(notFoundHandler);
 
   return new Promise((resolve, reject) => {
     app.listen(PORT, (err) => {
