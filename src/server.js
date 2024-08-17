@@ -7,12 +7,10 @@ import router from './routers/contacts.js';
 import notFoundHandler from './middlewares/notFoundHandler.js';
 import errorHandler from './middlewares/errorHandler.js';
 const app = express();
-app.use(express.json());
 
 const PORT = Number(env('PORT', '3000'));
 
 export const startServer = () => {
-  app.use(express.json());
   app.use(cors());
 
   const prettyStream = pinoPretty({
@@ -39,12 +37,9 @@ export const startServer = () => {
 
   app.use('/contacts', router);
 
-  app.use('*', (req, res) => {
-    res.status(404).json({ status: 'error', message: 'Not found' });
-  });
+  app.use(notFoundHandler);
 
   app.use(errorHandler);
-  app.use(notFoundHandler);
 
   return new Promise((resolve, reject) => {
     app.listen(PORT, (err) => {
