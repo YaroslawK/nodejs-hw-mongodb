@@ -15,7 +15,6 @@ export const parsePaginationParams = (query) => {
 
   const parsedPage = parseNumber(page, 1);
   const parsedPerPage = parseNumber(perPage, 10);
-  console.log('UTILS', parsedPage, parsedPerPage);
 
   return { parsedPage, parsedPerPage };
 };

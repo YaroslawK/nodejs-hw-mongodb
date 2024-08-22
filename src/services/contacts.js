@@ -11,10 +11,11 @@ export const getAllContacts = async ({ page, perPage, sortBy, sortOrder }) => {
   ]);
   const totalPages = Math.ceil(count / perPage);
   return {
-    contacts,
+    data: contacts,
     page,
     perPage,
     totalItems: count,
+    totalPages,
     hasNextPage: totalPages - page > 0,
     hasPreviousPage: page > 1,
   };

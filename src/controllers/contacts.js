@@ -14,8 +14,6 @@ export const getContactsController = async (req, res, next) => {
     const { parsedPage, parsedPerPage } = parsePaginationParams(req.query);
     const { sortBy, sortOrder } = parseSortParams(req.query);
 
-    console.log('CONTROL', { parsedPage, parsedPerPage });
-
     const contacts = await getAllContacts({
       page: parsedPage,
       perPage: parsedPerPage,
@@ -82,7 +80,6 @@ export const updateContactController = async (req, res, next) => {
     const updateData = req.body;
 
     const updatedContact = await updateContact(contactId, updateData);
-    console.log(updatedContact);
 
     if (updatedContact === null) {
       return next(createHttpError(404, 'Contact not found'));
