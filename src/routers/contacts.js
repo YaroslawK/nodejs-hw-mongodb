@@ -12,14 +12,14 @@ import {
   createContactPatchSchema,
   createContactSchema,
 } from '../validation/contacts.js';
-import { isValidID } from '../middlewares/isValidId.js';
+import { isValidId } from '../middlewares/isValiddId.js';
 
 const router = Router();
 const jsonParser = json();
 
 router.get('/', ctrlWrapper(getContactsController));
 
-router.get('/:contactsId', isValidID, ctrlWrapper(getContactByIdController));
+router.get('/:contactsId', isValidId, ctrlWrapper(getContactByIdController));
 
 router.post(
   '/',
@@ -30,12 +30,12 @@ router.post(
 
 router.patch(
   '/:contactId',
-  isValidID,
+  isValidId,
   jsonParser,
   validateBody(createContactPatchSchema),
   ctrlWrapper(updateContactController),
 );
 
-router.delete('/:contactId', isValidID, ctrlWrapper(deleteContactController));
+router.delete('/:contactId', isValidId, ctrlWrapper(deleteContactController));
 
 export default router;
