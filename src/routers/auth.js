@@ -3,6 +3,7 @@ import ctrlWrapper from '../utils/ctrlWrapper.js';
 import { loginSchema, registerUserSchema } from '../validation/auth.js';
 import {
   loginController,
+  logOutController,
   registerUserController,
 } from '../controllers/auth.js';
 import { validateBody } from '../middlewares/validateBody.js';
@@ -22,5 +23,7 @@ router.post(
   validateBody(loginSchema),
   ctrlWrapper(loginController),
 );
+
+router.post('/logout', jsonParser, ctrlWrapper(logOutController));
 
 export default router;
