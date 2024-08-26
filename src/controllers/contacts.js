@@ -19,6 +19,7 @@ export const getContactsController = async (req, res, next) => {
       perPage: parsedPerPage,
       sortBy,
       sortOrder,
+      parentId: req.user._id,
     });
 
     res.status(200).json({
@@ -40,6 +41,9 @@ export const getContactByIdController = async (req, res, next) => {
       return next(createHttpError(404, 'Contact not found'));
     }
 
+    if (contacts.parentId.toString() !== req.user._id.toString()) {
+      return next(createHttpError(404, 'Student not found'));
+    }
     res.status(200).json({
       status: 200,
       message: `Successfully found contact with id ${contacts._id}!`,
@@ -60,6 +64,7 @@ export const createContactController = async (req, res, next) => {
       email,
       isFavourite,
       contactType,
+      parentId: req.user._id,
     };
 
     const createdContact = await createContact(contact);
