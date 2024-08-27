@@ -19,7 +19,7 @@ const jsonParser = json();
 
 router.get('/', ctrlWrapper(getContactsController));
 
-router.get('/:contactsId', isValidId, ctrlWrapper(getContactByIdController));
+router.get('/:contactId', isValidId, ctrlWrapper(getContactByIdController));
 
 router.post(
   '/',
