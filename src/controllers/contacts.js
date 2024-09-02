@@ -8,6 +8,8 @@ import {
 } from '../services/contacts.js';
 import { parsePaginationParams } from '../utils/parsePaginationParams.js';
 import { parseSortParams } from '../utils/parseSortParams.js';
+import fs from 'node:fs/promises';
+import path from 'node:path';
 
 export const getContactsController = async (req, res, next) => {
   try {
@@ -54,6 +56,17 @@ export const getContactByIdController = async (req, res, next) => {
 
 export const createContactController = async (req, res, next) => {
   try {
+    let photo = null;
+
+    if (typeof req.file !== 'undefined') {
+      await fs.rename(
+        req.file.path,
+        path.resolve('src', 'public/avatars', req.file.filename),
+      );
+
+      photo = `http://localhost:3000/avatars/${req.file.filename}`;
+    }
+
     const { name, phoneNumber, email, isFavourite, contactType } = req.body;
 
     const contact = {
@@ -63,6 +76,7 @@ export const createContactController = async (req, res, next) => {
       isFavourite,
       contactType,
       userId: req.user._id,
+      photo: req.file.filename,
     };
 
     const createdContact = await createContact(contact);
