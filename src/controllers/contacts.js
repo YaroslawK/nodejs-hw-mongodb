@@ -8,6 +8,10 @@ import {
 } from '../services/contacts.js';
 import { parsePaginationParams } from '../utils/parsePaginationParams.js';
 import { parseSortParams } from '../utils/parseSortParams.js';
+import fs from 'node:fs/promises';
+import path from 'node:path';
+import { uploadToCloudinary } from '../utils/uploadToCloudinary.js';
+import { log } from 'node:console';
 
 export const getContactsController = async (req, res, next) => {
   try {
@@ -54,6 +58,23 @@ export const getContactByIdController = async (req, res, next) => {
 
 export const createContactController = async (req, res, next) => {
   try {
+    let photo = null;
+
+    if (typeof req.file !== 'undefined') {
+      if (process.env.ENABLE_CLOUDINARY === 'true') {
+        const result = await uploadToCloudinary(req.file.path);
+        await fs.unlink(req.file.path);
+        photo = result.secure_url;
+      } else {
+        await fs.rename(
+          req.file.path,
+          path.resolve('src', 'public/avatars', req.file.secure_url),
+        );
+
+        photo = `http://localhost:3000/avatars/${req.file.secure_url}`;
+      }
+    }
+
     const { name, phoneNumber, email, isFavourite, contactType } = req.body;
 
     const contact = {
@@ -63,6 +84,7 @@ export const createContactController = async (req, res, next) => {
       isFavourite,
       contactType,
       userId: req.user._id,
+      photo,
     };
 
     const createdContact = await createContact(contact);
@@ -80,7 +102,24 @@ export const createContactController = async (req, res, next) => {
 export const updateContactController = async (req, res, next) => {
   try {
     const { contactId } = req.params;
-    const updateData = req.body;
+    const updateData = { ...req.body };
+    let photo = null;
+
+    if (typeof req.file !== 'undefined') {
+      if (process.env.ENABLE_CLOUDINARY === 'true') {
+        const result = await uploadToCloudinary(req.file.path);
+        await fs.unlink(req.file.path);
+        photo = result.secure_url;
+      } else {
+        await fs.rename(
+          req.file.path,
+          path.resolve('src', 'public/avatars', req.file.filename),
+        );
+
+        photo = `http://localhost:3000/avatars/${req.file.filename}`;
+      }
+      updateData.photo = photo;
+    }
 
     const updatedContact = await updateContact(
       contactId,

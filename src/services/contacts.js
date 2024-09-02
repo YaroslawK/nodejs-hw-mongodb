@@ -44,10 +44,11 @@ export const createContact = async (payload) => {
   return contact;
 };
 
-export const updateContact = async (contactId, updateData, userId) => {
+export const updateContact = async (contactId, updateData, userId, photo) => {
   const updatedContact = await ContactsCollection.findOneAndUpdate(
     { _id: contactId, userId },
     updateData,
+    photo,
     {
       new: true,
       runValidators: true,

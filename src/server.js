@@ -7,7 +7,11 @@ import router from './routers/index.js';
 import notFoundHandler from './middlewares/notFoundHandler.js';
 import errorHandler from './middlewares/errorHandler.js';
 import cookieParser from 'cookie-parser';
+import path from 'node:path';
+
 const app = express();
+
+app.use('/avatars', express.static(path.resolve('src', 'public/avatars')));
 
 app.use(cookieParser());
 
