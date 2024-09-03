@@ -5,11 +5,7 @@ import jwt from 'jsonwebtoken';
 import handlebars from 'handlebars';
 import { Session } from '../models/session.js';
 import crypto from 'node:crypto';
-import {
-  ACCESS_TOKEN_TTL,
-  REFRESH_TOKEN_TTL,
-  SMTP,
-} from '../constants/index.js';
+import { ACCESS_TOKEN_TTL, REFRESH_TOKEN_TTL } from '../constants/index.js';
 import { sendMail } from '../utils/sendMail.js';
 import fs from 'node:fs';
 import path from 'node:path';
@@ -102,7 +98,7 @@ export const requestResetEmail = async (email) => {
     const html = template({ name: user.name, resetToken });
 
     await sendMail({
-      from: SMTP.FROM_EMAIL,
+      from: process.env.SMTP_FROM_EMAIL,
       to: email,
       subject: 'Reset your password',
       html: html,
