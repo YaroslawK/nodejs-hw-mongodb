@@ -11,7 +11,6 @@ import { parseSortParams } from '../utils/parseSortParams.js';
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import { uploadToCloudinary } from '../utils/uploadToCloudinary.js';
-import { log } from 'node:console';
 
 export const getContactsController = async (req, res, next) => {
   try {
@@ -68,10 +67,10 @@ export const createContactController = async (req, res, next) => {
       } else {
         await fs.rename(
           req.file.path,
-          path.resolve('src', 'public/avatars', req.file.secure_url),
+          path.resolve('src', 'public/avatars', req.file.filename),
         );
 
-        photo = `http://localhost:3000/avatars/${req.file.secure_url}`;
+        photo = `http://localhost:3000/avatars/${req.file.filename}`;
       }
     }
 
