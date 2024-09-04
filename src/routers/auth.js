@@ -1,12 +1,15 @@
 import { json, Router } from 'express';
 import ctrlWrapper from '../utils/ctrlWrapper.js';
 import {
+  confirmOAuthSchema,
   loginSchema,
   registerUserSchema,
   requestResetEmailSchema,
   resetPasswordSchema,
 } from '../validation/auth.js';
 import {
+  confirmOAuthController,
+  getOAuthURLController,
   loginController,
   logOutController,
   refreshController,
@@ -49,6 +52,15 @@ router.post(
   jsonParser,
   validateBody(resetPasswordSchema),
   ctrlWrapper(resetPasswordController),
+);
+
+router.get('/get-oauth-url', ctrlWrapper(getOAuthURLController));
+
+router.post(
+  '/confirm-oauth',
+  jsonParser,
+  validateBody(confirmOAuthSchema),
+  ctrlWrapper(confirmOAuthController),
 );
 
 export default router;
