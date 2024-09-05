@@ -7,12 +7,16 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon ./index.js",
-    "start": "set NODE_ENV=dev && node index.js"
+    "start": "set NODE_ENV=dev && node index.js",
+    "build": "npm run build-docs",
+    "build-docs": "redocly bundle --ext json -o docs/swagger.json",
+    "preview-docs": "redocly preview-docs"
   },
   "keywords": [],
   "author": "YaroslawK <xxjokerxx933@gmail.com>",
   "license": "ISC",
   "devDependencies": {
+    "@redocly/cli": "^1.22.1",
     "nodemon": "^3.1.4"
   },
   "dependencies": {
@@ -32,6 +36,7 @@
     "nodemailer": "^6.9.14",
     "pino": "^9.3.2",
     "pino-http": "^10.2.0",
-    "pino-pretty": "^11.2.2"
+    "pino-pretty": "^11.2.2",
+    "swagger-ui-express": "^5.0.1"
   }
 }

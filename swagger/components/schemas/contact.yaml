@@ -1,0 +1,18 @@
+type: object
+required:
+  - _id
+  - name
+  - gender
+properties:
+  _id:
+    description: 'Contacts id'
+    type: string
+    example: 66d6ae9077a0cf8c0375e86d
+  name:
+    description: 'Contacts name'
+    example: 'John Doe'
+  gender:
+    description: 'Contacts gender'
+    type: string
+    enum: ['male', 'female']
+    example: male

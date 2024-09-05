@@ -8,8 +8,11 @@ import notFoundHandler from './middlewares/notFoundHandler.js';
 import errorHandler from './middlewares/errorHandler.js';
 import cookieParser from 'cookie-parser';
 import path from 'node:path';
+import { swaggerDocs } from './middlewares/swaggerDocs.js';
 
 const app = express();
+
+app.use('/api-docs', swaggerDocs());
 
 app.use('/avatars', express.static(path.resolve('src', 'public/avatars')));
 
@@ -41,7 +44,6 @@ export const startServer = () => {
       message: 'Hello World!',
     });
   });
-
   app.use(router);
 
   app.use(notFoundHandler);

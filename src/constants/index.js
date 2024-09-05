@@ -10,3 +10,5 @@ export const REFRESH_TOKEN_TTL = 30 * 24 * 60 * 60 * 1000; // 30 days in millise
 
 export const TEMP_UPLOAD_DIR = path.join(process.cwd(), 'src/tmp');
 export const UPLOAD_DIR = path.join(process.cwd(), 'uploads');
+
+export const SWAGGER_PATH = path.join(process.cwd(), 'docs', 'swagger.json');
