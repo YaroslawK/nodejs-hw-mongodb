@@ -1,29 +1,30 @@
 tags:
   - Contacts
-summary: Create contact
-operationId: createContact
-description: 'Create a contact'
+summary: Update contact
+operationId: updateContact
+description: 'Update an existing contact'
 security:
   - bearerAuth: []
+parameters:
+  - in: path
+    name: id
+    required: true
+    description: 'ID of the contact to update'
+    schema:
+      type: string
+      example: 66d6ae9077a0cf8c0375e86d
 requestBody:
   content:
     multipart/form-data:
       schema:
         type: object
-        required:
-          - name
-          - phoneNumber
-          - email
-          - isFavourite
-          - contactType
-          - photo
         properties:
           name:
             description: "Contact's name"
             type: string
             example: 'John Doe'
           phoneNumber:
-            description: "Contact's phoneNumber"
+            description: "Contact's phone number"
             type: number
             example: 123-456-789
           email:
@@ -31,7 +32,7 @@ requestBody:
             type: string
             example: example@mail.com
           isFavourite:
-            description: 'is favourite contact?'
+            description: 'Is this a favourite contact?'
             type: boolean
             example: false
           contactType:
@@ -39,7 +40,7 @@ requestBody:
             type: string
             enum: ['work', 'home', 'personal']
           parentId:
-            description: "Contact's parent id"
+            description: "Contact's parent ID"
             type: string
             example: 65e4decdd286b30065d54af9
           photo:
@@ -47,8 +48,8 @@ requestBody:
             type: string
             format: binary
 responses:
-  '201':
-    description: Successfully created contact
+  '200':
+    description: Successfully updated contact
     content:
       application/json:
         schema:
@@ -60,11 +61,24 @@ responses:
           properties:
             status:
               type: integer
-              example: 201
+              example: 200
             message:
               type: string
-              example: 'Successfully created contact'
+              example: 'Successfully updated contact'
             data:
-              $ref: '../../components/schemas/contact.yaml'
+              $ref: '../../../components/schemas/contact.yaml'
   '401':
-    $ref: '../../components/responses/401.yaml'
+    $ref: '../../../components/responses/401.yaml'
+  '404':
+    description: Contact not found
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            status:
+              type: integer
+              example: 404
+            message:
+              type: string
+              example: 'Contact not found'
