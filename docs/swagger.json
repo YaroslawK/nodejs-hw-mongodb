@@ -175,11 +175,6 @@
                       "personal"
                     ]
                   },
-                  "parentId": {
-                    "description": "Contact's parent ID",
-                    "type": "string",
-                    "example": "65e4decdd286b30065d54af9"
-                  },
                   "photo": {
                     "description": "Contact's photo",
                     "type": "string",
@@ -424,10 +419,7 @@
                 "required": [
                   "name",
                   "phoneNumber",
-                  "email",
-                  "isFavourite",
-                  "contactType",
-                  "photo"
+                  "contactType"
                 ],
                 "properties": {
                   "name": {
@@ -458,11 +450,6 @@
                       "home",
                       "personal"
                     ]
-                  },
-                  "parentId": {
-                    "description": "Contact's parent id",
-                    "type": "string",
-                    "example": "65e4decdd286b30065d54af9"
                   },
                   "photo": {
                     "description": "Contact's photo",
